@@ -2,3 +2,4 @@ project(part_one)
 
 add_subdirectory(introducing_low_latency_application_development_in_cpp)
 add_subdirectory(exploring_cpp_concepts_from_a_low_latency_applications_perspective)
+add_subdirectory(building_the_cpp_building_blocks_for_low_latency_applications)
