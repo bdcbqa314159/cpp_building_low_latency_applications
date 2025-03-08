@@ -56,3 +56,33 @@ We will move on from this discussion of different low latency applications to a 
 discussion of the C++ programming language. We will discuss the correct approach to using C++
 for low latency performance, the different modern C++ features, and how to unleash the power of
 modern C++ compiler optimizations.
+
+### Exploring C++ concepts from a low-latency application's perspective
+
+In this chapter, first, we discussed general advice that applies to developing low-latency applications
+in any programming language. We discussed the ideal software engineering approach when it comes
+to these applications and how to think about, design, develop, and evaluate building blocks such as
+the data structures and algorithms to use.
+We emphasized that when it comes to low-latency application development specifically, the depth of
+knowledge on topics such as processor architecture, cache and memory layout and access, how the
+C++ programming language works under the hood, and how the compiler works to optimize your
+code will dictate your success. Measuring and improving performance is also a critical component
+for low-latency applications but we will dive into those details at the end of this book.
+We spent a lot of time discussing different C++ principles, constructs, and features with the objective
+of understanding how they are implemented at a lower level. The goal here was to unlearn sub-optimal
+practices and emphasize some of the ideal aspects of using C++ for low-latency application development.
+In the remainder of this book, as we build our low-latency electronic trading exchange ecosystem
+(collection of applications that interact with each other), we will reinforce and build on these ideas
+we discussed here as we avoid certain C++ features and use others instead.
+In the last section of this chapter, we discussed many aspects of the C++ compiler in detail. We tried to
+build an understanding of how compilers optimize developers’ high-level code, as in, what techniques
+they have at their disposal. We also investigated scenarios in which the compiler fails to optimize a
+developer’s code. The goal there was for you to understand how to use a compiler to your advantage
+when trying to output the most optimal machine code possible and help the compiler help you avoid
+conditions where the compiler fails to optimize. Finally, we looked at the different compiler optimization
+flags available for the GNU GCC compiler, which is what we will use in the rest of this book.
+We will put our theoretical knowledge into practice in the next chapter where we jump into implementing
+some common building blocks of low-latency applications in C++. We will keep our goal of building
+these components to be low-latency and highly performant. We will carefully use the principles and
+techniques we discussed in this chapter to build these high-performance components. In later chapters,
+we will use these components to build an electronic trading ecosystem.
