@@ -166,3 +166,36 @@ designed in this chapter. Note that we will reuse a lot of the basic building bl
 previous chapter moving forward as we implement our electronic trading ecosystem. The motivation
 for building the basic building blocks will become clearer as we implement the rest of the system,
 starting in the next chapter.
+
+### Building the C++ matching engine
+
+We started the C++ implementation of our electronic trading ecosystem in this chapter. The first
+component we built was the exchange matching engine in charge of accepting and answering order
+requests from the order server component in the exchange infrastructure. This component is also
+responsible for generating and publishing market data updates to the market data publisher component
+in the exchange’s infrastructure.
+First, we declared some assumptions in our matching engine and limit order books. We also defined
+a couple of basic Plain Old Data (POD)-style structures to encapsulate information for a single order
+in the limit order book, a single order request sent from the order server, an order response sent back
+to the order server, and a single market data update. We showed how to use the lock-free queue to
+facilitate communication between the matching engine and order server and market data publisher
+for order requests, order responses, and market data updates. To build the limit order book, we also
+defined some hash maps to track orders by OrderId and chain together orders at the same price
+inside the MEOrdersAtPrice structure. Reiterating what we already covered, these price levels
+themselves are maintained in a doubly linked list and a hash map indexed by price.
+Then, we built the matching engine component, which is an independent thread of execution that
+consumes updates from the order server and publishes responses and market data updates back to
+the order server and the market data publisher. We also built the main application binary for the
+electronic trading exchange, which we will enhance in the next chapter.
+Finally, we laid out the details of the mechanism involved in building and updating the data structures
+for the limit order book. We discussed the tasks involved in handling new order requests and order
+cancelation requests. We also implemented the functionality of the matching engine to perform the
+actual matching between new aggressive orders against existing passive orders that cross in price.
+Match events generate private execution messages for the market participants involved in a match
+event. Additionally, the event also generates trade messages and order deletion or modification on
+the public market data feed.
+In the next chapter, we will build the market data publisher component, which is the component that
+consumes the market data updates generated from the matching engine and puts them on the wire for
+participants to consume. Additionally, we will also build the order server component that resides in
+the electronic trading exchange and manages the communication with the different market participant
+order gateways, forwarding requests and responses to and from the matching engine.
