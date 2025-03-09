@@ -10,7 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 MESSAGE(STATUS "the source directory is: ${CMAKE_SOURCE_DIR}")
 
 add_subdirectory(part_one)
-# add_subdirectory(part_two)
+add_subdirectory(part_two)
 # add_subdirectory(part_three)
 
 

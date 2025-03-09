@@ -1,3 +1,4 @@
 project(part_two)
 
 add_subdirectory(designing_our_trading_ecosystem)
+add_subdirectory(building_the_cpp_matching_engine)
