@@ -7,7 +7,9 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 
 # file(GLOB SOURCES "*.cpp")
 
-set(sources libcommon.cpp)
+set(sources libcommon.cpp
+            tcp_server.cpp
+            tcp_socket.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
@@ -27,3 +29,6 @@ target_link_libraries(lf_queue_example PUBLIC ${LIBS})
 
 add_executable(logging_example logging_example.cpp)
 target_link_libraries(logging_example PUBLIC ${LIBS})
+
+add_executable(socket_example socket_example.cpp)
+target_link_libraries(socket_example PUBLIC ${LIBS})
