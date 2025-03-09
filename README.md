@@ -86,3 +86,83 @@ some common building blocks of low-latency applications in C++. We will keep our
 these components to be low-latency and highly performant. We will carefully use the principles and
 techniques we discussed in this chapter to build these high-performance components. In later chapters,
 we will use these components to build an electronic trading ecosystem.
+
+### Building the C++ building blocks for low-latency applications
+
+In this chapter, we jumped into the world of low latency application C++ development. We built some
+relatively fundamental but extremely useful building blocks that can be used for a variety of low latency
+application purposes. We put into practice a lot of the theoretical discussions related to using C++ and
+computer architecture features effectively to build low latency and highly performant applications.
+The first component was used to create new threads of execution and run the functions that different
+components might require. One important functionality here is being able to control the CPU core
+that the newly created thread gets pinned to by setting the thread affinity.
+The second component we built was meant to avoid dynamic memory allocation on the critical code
+path. We reiterated the inefficiencies associated with dynamic memory allocation and designed a
+memory pool to be used to pre-allocate memory from the heap when constructed. Then, we added
+utility to the component to allow the allocation and deallocation of objects at runtime without relying
+on dynamic memory allocation.
+Next, we built a lock-free, First In First Out (FIFO)-style queue to communicate between threads in
+an SPSC setup. The important requirement here was that a single reader and a single writer are able
+to access the shared data in the queue without using any locks or mutexes. The absence of locks and
+mutexes means the absence of context switches, which, as discussed, are a major source of inefficiencies
+and latencies in multi-threaded applications.
+The fourth component on our list was a framework to facilitate efficient logging for latency-sensitive
+applications. Logging is a very important if not mandatory component of all applications, including
+low latency applications. However, due to issues such as disk I/O, slow string formatting, and so on,
+traditional logging mechanisms such as writing to a log file on disk is impractical for use with low
+latency applications. To build this component, we used the multi-threading mechanism we built, as
+well as the lock-free FIFO queue.
+Finally, we had an in-depth discussion about designing our network stack – how to create network
+sockets, how to use them to create TCP servers and clients, and how to use them to publish and
+consume multicast traffic. We have not used this last component yet, but we will use this component
+in subsequent chapters to facilitate communication between our electronic trading exchange and
+different market participants.
+Now, we will move on to a case study project, which we will build in the rest of this book – our
+electronic trading ecosystem. In the next chapter, we will first focus on designing and understanding
+the higher-level design of the various components in our system. We will understand the purpose
+of these components, the motivation behind their design choices, and how the flow of information
+occurs in the system. The next chapter will also see us designing the higher-level C++ interfaces that
+we will implement in the rest of this book.
+
+## Part 2: Building a live trading exchange in C++
+
+### Designing our trading ecosystem
+
+This concludes our discussion of the details and design of the major components in our electronic
+trading ecosystem. Let us summarize the concepts, components, and interactions we discussed, as
+well as the design of the components that build the electronic trading ecosystem we will build.
+We started off by presenting the topology of the electronic trading ecosystem. This consists of the
+electronic trading exchange and many market participants that want to trade on that exchange. The
+electronic trading exchange infrastructure itself consists of three major components at a high level –
+the matching engine, the market data publisher, and the order gateway server infrastructure. From a
+market participant’s perspective, the major components are the market data subscriber and consumer,
+the trading strategy framework with all its subcomponents, and the order gateway client infrastructure.
+Next, we performed a deep dive into the exchange matching engine details. We explained the
+responsibilities of this component and how it builds, maintains, and updates the limit order book
+and matches participant orders that cross against each other. We concluded that section by designing
+our simplified matching engine component and its subcomponents, which we will implement in the
+next chapter.
+The next topics of discussion were the market data publisher and the order gateway server infrastructure
+at the exchange. We described in great detail the different messages that the market data feed is
+composed of, the market data feed protocol, as well as designing the components inside the market
+data publisher. We also discussed the order gateway server, which the exchange hosts as an endpoint
+for the market participants to connect to, forward order requests, and receive order responses and
+notifications for their orders getting executed by the matching engine. We presented the design of the
+order gateway server with all its subcomponents, which we will implement in later chapters of this book.
+The section following that took a look at the market participants’ trading systems. First, we discussed the
+details for the market data consumer and the order gateway client infrastructure, which the participants
+use to consume the public market data feed from the exchange and connect to and communicate with
+the exchange. We also presented and discussed the design of the market data consumer we will build,
+as well as how it synchronizes and decodes the exchange market data feed. Finally, we designed the
+order gateway client infrastructure, which the trading system will use to connect to and communicate
+with the exchange’s order gateway server infrastructure.
+The final section of this chapter was dedicated to describing and designing the framework for trading
+strategies. We described the major components we will need to build this framework – the order book,
+the feature engine, the execution logic framework, and the risk management subcomponent. Finally, we
+laid out the design of the trading infrastructure we will build so that you can understand the higher-
+level design of this component before we dive into the lower-level details in subsequent chapters.
+The next chapter jumps into the implementation details of the matching engine framework we
+designed in this chapter. Note that we will reuse a lot of the basic building blocks we built in the
+previous chapter moving forward as we implement our electronic trading ecosystem. The motivation
+for building the basic building blocks will become clearer as we implement the rest of the system,
+starting in the next chapter.
